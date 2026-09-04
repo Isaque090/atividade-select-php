@@ -90,11 +90,17 @@ $enviar->execute();
                                         <td><?= htmlspecialchars($linha['sg_materia']) ?></td>
                                  
                                     <td>
+                                        <div class="row">
                                         <form action="materias.php" method="post">
                                        <input type="hidden" name="id" value="<?= $linha['cd_materia'] ?>">
                                                <button type="submit" name="excluir"  class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
 
                                         </form>
+                                        <a href="editar_materia.php?id=<?= $linha['cd_materia'] ?>"
+   class="btn btn-warning btn-sm ml-3">
+    Editar
+</a>
+                                       </div> 
                                     </td>
                                 </tr>
                             <?php endwhile; ?>

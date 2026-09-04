@@ -1,4 +1,4 @@
-```php
+
 <?php
 
 include_once('config.php');
@@ -7,7 +7,7 @@ if (isset($_GET['id'])) {
 
     $id = $_GET['id'];
 
-    $sql = "SELECT * FROM materias WHERE cd_materia = ?";
+    $sql = "SELECT * FROM alunos WHERE cd_aluno = ?";
 
     $stmt = $conexao->prepare($sql);
     $stmt->bind_param("i", $id);
@@ -22,14 +22,14 @@ if (isset($_GET['id'])) {
 
     } else {
 
-        header("Location: materias.php");
+        header("Location: alunos.php");
         exit;
 
     }
 
 } else {
 
-    header("Location: materias.php");
+    header("Location: alunos.php");
     exit;
 
 }
@@ -37,16 +37,16 @@ if (isset($_GET['id'])) {
 
 if (isset($_POST['editar'])) {
 
-    $materia = $_POST['materia'];
-    $sigla = $_POST['sigla'];
-
-    $sql = "UPDATE materias  SET nm_materia = ?, sg_materia = ?  WHERE cd_materia = ?";
+    $nome = $_POST['nome'];
+    $matricula = $_POST['matricula'];
+$email=$_POST['email'];
+    $sql = "UPDATE alunos  SET nm_aluno=?, ds_matricula=?, ds_email =? WHERE cd_aluno = ?";
 
     $stmt = $conexao->prepare($sql);
-    $stmt->bind_param("ssi", $materia, $sigla, $id);
+    $stmt->bind_param("sssi", $nome, $matricula, $email,$id);
     $stmt->execute();
 
-    header("Location: materias.php");
+    header("Location: alunos.php");
     exit;
 }
 
@@ -61,7 +61,7 @@ if (isset($_POST['editar'])) {
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Editar Matéria</title>
+    <title>Editar aluno</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
 
@@ -95,7 +95,7 @@ if (isset($_POST['editar'])) {
                     <div class="card-header bg-dark text-white">
 
                         <h4 class="mb-0">
-                            Editar matéria
+                            Editar Aluno
                         </h4>
 
                     </div>
@@ -104,16 +104,22 @@ if (isset($_POST['editar'])) {
 
                         <form method="post">
                             <div class="form-group">
-                                <label>Matéria</label>
-                                <input type="text" name="materia" class="form-control"
-                                    value="<?= htmlspecialchars($linha['nm_materia']) ?>" required>
+                                <label>Nome</label>
+                                <input type="text" name="nome" class="form-control"
+                                    value="<?= htmlspecialchars($linha['nm_aluno']) ?>" required>
                             </div>
                             <div class="form-group">
-                                <label>Sigla</label>
-                                <input type="text" name="sigla" class="form-control"
-                                    value="<?= htmlspecialchars($linha['sg_materia']) ?>" required>
+                                <label>Matricula</label>
+                                <input type="number" name="matricula" class="form-control"
+                                    value="<?= htmlspecialchars($linha['ds_matricula']) ?>" required>
                             </div>
-                            <a href="materias.php" class="btn btn-secondary">Voltar</a>
+
+                             <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" name="email" class="form-control"
+                                    value="<?= htmlspecialchars($linha['ds_email']) ?>" required>
+                            </div>
+                            <a href="alunos.php" class="btn btn-secondary">Voltar</a>
                             <button type="submit" name="editar" class="btn btn-primary">
                                 Salvar alterações
                             </button>

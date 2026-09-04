@@ -7,7 +7,7 @@ if (isset($_GET['id'])) {
 
     $id = $_GET['id'];
 
-    $sql = "SELECT * FROM materias WHERE cd_materia = ?";
+    $sql = "SELECT * FROM professores WHERE cd_professor = ?";
 
     $stmt = $conexao->prepare($sql);
     $stmt->bind_param("i", $id);
@@ -22,14 +22,14 @@ if (isset($_GET['id'])) {
 
     } else {
 
-        header("Location: materias.php");
+        header("Location: professor.php");
         exit;
 
     }
 
 } else {
 
-    header("Location: materias.php");
+    header("Location: professor.php");
     exit;
 
 }
@@ -37,16 +37,16 @@ if (isset($_GET['id'])) {
 
 if (isset($_POST['editar'])) {
 
-    $materia = $_POST['materia'];
-    $sigla = $_POST['sigla'];
 
-    $sql = "UPDATE materias  SET nm_materia = ?, sg_materia = ?  WHERE cd_materia = ?";
+$nome=$_POST['nome'];
+$email=$_POST['email'];
+    $sql = "UPDATE professores  SET nm_professor=?, ds_email=?  WHERE cd_professor = ?";
 
     $stmt = $conexao->prepare($sql);
-    $stmt->bind_param("ssi", $materia, $sigla, $id);
+    $stmt->bind_param("ssi", $nome, $email, $id);
     $stmt->execute();
 
-    header("Location: materias.php");
+    header("Location: professor.php");
     exit;
 }
 
@@ -95,7 +95,7 @@ if (isset($_POST['editar'])) {
                     <div class="card-header bg-dark text-white">
 
                         <h4 class="mb-0">
-                            Editar matéria
+                            Editar Professor
                         </h4>
 
                     </div>
@@ -104,16 +104,16 @@ if (isset($_POST['editar'])) {
 
                         <form method="post">
                             <div class="form-group">
-                                <label>Matéria</label>
-                                <input type="text" name="materia" class="form-control"
-                                    value="<?= htmlspecialchars($linha['nm_materia']) ?>" required>
+                                <label>Nome</label>
+                                <input type="text" name="nome" class="form-control"
+                                    value="<?= htmlspecialchars($linha['nm_professor']) ?>" required>
                             </div>
                             <div class="form-group">
-                                <label>Sigla</label>
-                                <input type="text" name="sigla" class="form-control"
-                                    value="<?= htmlspecialchars($linha['sg_materia']) ?>" required>
+                                <label>Email</label>
+                                <input type="email" name="email" class="form-control"
+                                    value="<?= htmlspecialchars($linha['ds_email']) ?>" required>
                             </div>
-                            <a href="materias.php" class="btn btn-secondary">Voltar</a>
+                            <a href="professores.php" class="btn btn-secondary">Voltar</a>
                             <button type="submit" name="editar" class="btn btn-primary">
                                 Salvar alterações
                             </button>
